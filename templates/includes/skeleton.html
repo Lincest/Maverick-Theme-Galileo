@@ -1,0 +1,301 @@
+<!DOCTYPE HTML>
+<html lang="{{ config.language }}">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="{{ ','.join(config.key_words) }}" />
+    <meta name="generator" content="{{ maverick_version }}" />
+    <meta name="template" content="Galileo" />
+    <link rel="alternate" type="application/rss+xml" title="{{ fp(config.site_name) }} &raquo; RSS 2.0" href="{{ fp(config.site_prefix) }}feed/index.xml" />
+    <link rel="alternate" type="application/atom+xml" title="{{ fp(config.site_name) }} &raquo; ATOM 1.0" href="{{ fp(config.site_prefix) }}feed/atom/index.xml" />
+    <link rel="stylesheet" href="{{ Router.gen_static_file_prefix() }}assets/galileo-1c8f2638f2.css">
+    <link rel="stylesheet" href="{{ Router.gen_static_file_prefix() }}assets/ExSearch/ExSearch-182e5a8868.css">
+    <link rel="stylesheet" href="{{ Router.gen_static_file_prefix() }}assets/katex.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700&display=swap">
+    <!-- photoswipe -->
+    <link rel="stylesheet" href="https://drivezip.roccoshi.top/photoswipe/photoswipe.css">
+    <link rel="stylesheet" href="https://drivezip.roccoshi.top/photoswipe/default-skin/default-skin.css">
+    <script src="https://drivezip.roccoshi.top/photoswipe/photoswipe.min.js"></script>
+    <script src="https://drivezip.roccoshi.top/photoswipe/photoswipe-ui-default.min.js"></script>
+
+    <script>
+        var ExSearchConfig = {
+            root: "",
+            api: "{{ Router.gen_static_file_prefix() + search_cache_hash }}.json"
+        }
+    </script>
+    {% block head %}{% endblock %}
+
+    {{ fp(config.head_addon) }}
+    </head>
+    
+    <body>
+        {% if config.background_img != "" %}
+            <div id="bg" style="background-image: url({{ fp(config.background_img) }})"></div>
+        {% endif %}
+        <div class="container">
+            <header id="ga-header">
+                <div first>
+                    <aside id="ga-brand">
+                        <h1 class="brand"><a class="no-style" href="{{ fp(config.site_prefix) }}">{{ fp(config.site_name) }}</a></h1>
+                        <p>{{ fp(config.description) }}</p>
+                    </aside>
+                </div>
+                <div second id="ga-nav">
+                    <nav class="navs">
+                        {{ build_navs(config.nav) }}
+                    </nav>
+                </div>
+            </header>
+            <div class="wrapper">
+                {% block main %}{% endblock %}
+                <footer class="ga-mono" id="ga-footer" align="center">
+<!--                     <section>
+                        <span id="ga-uptime"></span>
+                        <span class="brand">{{ fp(config.site_name) }}</span>
+                    </section>
+                    <section>
+                        <p class="copyright">
+                            <span>Copyright © {{ moment.now().format('%Y') }} {{ fp(config.author) }}</span>
+                            <span>Powered by <a no-style href="https://github.com/AlanDecode/Maverick" target="_blank">Maverick & Galileo</a></span>
+                        </p>
+                        <div class="copyright"> -->
+                            <span class="footer-addon">
+                                {{ fp(config.footer_addon) }}
+                            </span>
+<!--                             <nav class="social-links">
+                                {{ build_links(config.social_links) }}
+                            </nav>
+                        </div>
+                    </section>
+                    <script>
+                        var site_build_date = "{{ fp(config.site_build_date) }}"
+                    </script>
+                    <script src="{{ Router.gen_static_file_prefix() }}assets/galileo-7c8cea54ab.js"></script> -->
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!--katex-->
+    <script defer src="{{ Router.gen_static_file_prefix() }}assets/katex.min.js"></script>
+    <script>
+    mathOpts = {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+            {left: "\\(", right: "\\)", display: false}
+        ]
+    };
+    </script>
+    <script defer src="{{ Router.gen_static_file_prefix() }}assets/auto-render.min.js" onload="renderMathInElement(document.body, mathOpts);"></script>
+
+    <script src="{{ Router.gen_static_file_prefix() }}assets/ExSearch/jquery.min.js"></script>
+    <script src="{{ Router.gen_static_file_prefix() }}assets/ExSearch/ExSearch-493cb9cd89.js"></script>
+    <script>
+    (function(){
+        var wrap = function(el, wrapper) {
+            el.parentNode.insertBefore(wrapper, el);
+            wrapper.appendChild(el);
+        }
+        // Parse iframes
+        var iframes = document.querySelectorAll('.post-content iframe');
+        for (var index = 0; index < iframes.length; index++) {
+            var el = iframes[index],
+                width = parseInt(el.getAttribute('width') || 16),
+                height = parseInt(el.getAttribute('height') || 9);
+            var padding = String(100*height/width) + '%';
+
+            var wrapper1 = document.createElement('div');
+            wrapper1.classList.add('iframe-wrapper-inner');
+            wrapper1.style.paddingTop = padding;
+
+            var wrapper2 = document.createElement('figure');
+            wrapper2.classList.add('iframe-wrapper');
+
+            wrap(el, wrapper1);
+            wrap(wrapper1, wrapper2);
+        }
+    })();
+</script>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+(function (gallerySelector, itemSelector) {
+    var openPhotoSwipe = function (galleryIndex, itemIndex) {
+        var gallery = this.gallerys[galleryIndex];
+        var options = {
+            galleryUID: String(galleryIndex + 1),
+            index: itemIndex,
+            getThumbBoundsFn: function (index) {
+                var thumbnail = gallery[index].el,
+                    pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
+                    rect = thumbnail.getBoundingClientRect();
+                return { x: rect.left, y: rect.top + pageYScroll, w: rect.width };
+            }
+        }
+        var pswp = new PhotoSwipe(document.querySelectorAll('.pswp')[0],
+            PhotoSwipeUI_Default, gallery, options);
+        pswp.init();
+    };
+
+    var figureClick = function (e) {
+        e = e || window.event;
+        e.preventDefault ? e.preventDefault() : e.returnValue = false;
+        var eTarget = e.target || e.srcElement;  // figure
+
+        // 找到最近的 item
+        var figure = eTarget;
+        while (!figure.matches(itemSelector)) {
+            figure = figure.parentNode;
+        }
+
+        // 找到最近的 gallery
+        var gallery = figure;
+        while (!gallery.matches(gallerySelector)) {
+            gallery = gallery.parentNode;
+        }
+
+        var galleryIndex = parseInt(gallery.dataset.pswpGid) - 1;
+        var itemIndex = parseInt(figure.dataset.pswpPid) - 1;
+        openPhotoSwipe(galleryIndex, itemIndex);
+    }
+
+    var initPhotoSwipeFromDOM = function () {
+        this.gallerys = [];
+
+        var gallyers = document.querySelectorAll(gallerySelector);
+        for (var i = 0; i < gallyers.length; i++) {
+            var gallery = gallyers[i];
+            gallery.setAttribute('data-pswp-gid', i + 1);
+            var currentList = []
+
+            var figures = gallery.querySelectorAll(itemSelector);
+            for (var j = 0; j < figures.length; j++) {
+                var figure = figures[j];
+                figure.setAttribute('data-pswp-pid', j + 1);
+                figure.onclick = figureClick;
+                img = figure.firstChild;
+                currentList.push({
+                    src: img.src,
+                    h: parseInt(img.getAttribute('height')),
+                    w: parseInt(img.getAttribute('width')),
+                    el: img
+                })
+            }
+
+            this.gallerys.push(currentList);
+        }
+    }
+
+    // parse picture index and gallery index from URL (#&pid=1&gid=2)
+    var photoswipeParseHash = function () {
+        var hash = window.location.hash.substring(1),
+            params = {};
+
+        if (hash.length < 5) {
+            return params;
+        }
+
+        var vars = hash.split('&');
+        for (var i = 0; i < vars.length; i++) {
+            if (!vars[i]) {
+                continue;
+            }
+            var pair = vars[i].split('=');
+            if (pair.length < 2) {
+                continue;
+            }
+            params[pair[0]] = pair[1];
+        }
+
+        if (params.gid) {
+            params.gid = parseInt(params.gid, 10);
+        }
+
+        return params;
+    };
+
+    var openFromUrl = function () {
+        var hashData = photoswipeParseHash();
+        if (hashData.gid && hashData.pid) {
+            openPhotoSwipe(hashData.gid - 1, hashData.pid - 1);
+        }
+    }
+
+    initPhotoSwipeFromDOM();
+    openFromUrl();
+})('.pswp-gallery', '.pswp-item');
+</script>
+    {{ fp(config.body_addon) }}
+    </body>
+</html>
