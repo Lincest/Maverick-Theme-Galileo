@@ -18,7 +18,7 @@
                 {% if content.meta['showfull'] %}
                     <div class="ga-content">{{ content.parsed }}</div>
                 {% else %}
-                    <blockquote>{{ content.excerpt }}</blockquote>
+                    <!-- <blockquote>{{ content.excerpt }}</blockquote> -->
                 {% endif %}
                 <footer>
                     <span class="ga-read_more"><a class="ga-highlight" href="{{ Router.gen_permalink_by_content(content) }}">{{ tr('Read More') }}</a></span>
